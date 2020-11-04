@@ -151,7 +151,7 @@ header("content-disposition: attachment;filename=".$nama_file);
     <td>Dengan hormat,</td>
   </tr>
   <tr>
-    <td style="text-align: justify;"><?= $si->isi_surat; ?></td>
+    <td style="text-align: justify;"><?= strip_tags($si->isi_surat); ?></td>
   </tr>
 </table>
 <br>
