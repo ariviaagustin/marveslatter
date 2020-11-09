@@ -46,7 +46,7 @@
                 <div class="row">
                   <div class="col-sm-6"><h3 class="card-title">Detail Undangan</h3></div>
                   <div class="col-sm-6" style="text-align: right;">
-                    <a href="<?= site_url('Compose/export_undangan/'.$data->id_daftar_surat); ?>" class="btn btn-primary"><i class = "fa fa-print"></i> Print</a>
+                    <a href="<?= site_url('Compose/undangan_print/'.$data->id_daftar_surat); ?>" class="btn btn-primary"><i class = "fa fa-print"></i> Print</a>
                     <?php if($data->status_surat == 1){ ?>
                       <div class="btn btn-warning"><i class = "fa fa-archive"></i> Draft</div>
                     <?php } ?>

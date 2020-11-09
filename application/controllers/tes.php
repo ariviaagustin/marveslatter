@@ -2,7 +2,7 @@
 	public function suratinternal_print($id_daftar_surat)
   	{
 	    $query = $this->M_surat->si_print($id_daftar_surat)->row();
-	    // print_r($query); die();
+	   	// print_r($query); die();
 	    $data_pegawai = $this->M_all->selectSemua('data_pegawai')->result();
 	    $jabatan = $this->M_all->selectSemua('master_jabatan')->result();
 	    $bag_unit = $this->M_all->selectSemua('master_bag_unit_kerja')->result();
@@ -19,7 +19,7 @@
 	    		{
 	    			if($data->id_data_pegawai == $key)
 	    			{
-	    				$kepada[] = $no++.". ".$data->nama_pegawai."<br>";
+	    				$kepada[] = $no++.". ".$data->nama_pegawai;
 	    			}
 	    		}
 	    	}
@@ -34,7 +34,7 @@
 	    		{
 	    			if($data->id_jabatan == $key)
 	    			{
-	    				$kepada[] = $no++.". ".$data->nama_jabatan."<br>";
+	    				$kepada[] = $no++.". ".$data->nama_jabatan;
 	    			}
 	    		}
 	    	}
@@ -82,6 +82,7 @@
 	    		}
 	    	}
 	    }
+	    $isi = strip_tags($query->isi_surat);
 
 	    header ("Content-type: text/html; charset=utf-8");
 	    $this->load->library('word');
@@ -93,8 +94,10 @@
 	    $document->setValue('{sifat_surat}', $query->nama_sifat_surat);
 	    $document->setValue('{lampiran}', $query->lampiran_surat);
 	    $document->setValue('{perihal}', $query->perihal_surat);
-	    $document->setValue('{ttd}', $query->nama_jabatan);
-
+	    $document->setValue('{jabatan_ttd}', $query->nama_jabatan);
+	    $document->setValue('{nama_ttd}', $query->nama_pegawai);
+	    $document->setValue('{isi_surat}', $isi);
+		
 	    $data1 = array(
 	        'kepada' => $kepada
 	    );
@@ -104,10 +107,13 @@
 	        'tembusan' => $temb
 	    );
 	    $document->cloneRow('TBL2', $data2);
-
-
 	    
-	    $tmp_file = 'Surat_Internal.docx';
+
+	    $nomor_surat = $query->no_surat;
+	    $no_surat = str_replace('/', '-', $nomor_surat );
+	    $nama_file = 'Surat_Internal-'.$no_surat.'.docx';
+	    
+	    $tmp_file = $nama_file;
 	    $document->save('./file_export/'.$tmp_file);
 
 	    // $filePath = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? $file_docx : $file_pdf ;

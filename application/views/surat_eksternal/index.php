@@ -112,7 +112,7 @@
                       </td>
                       <td style="text-align: left;">
                         <a href="<?php echo site_url('Surat_eksternal/detail/'.$key->id_daftar_surat); ?>" class = "btn btn-success btn-sm" title = "Detail"><li class="fa fa-search"></li></a>
-                        <a href="<?php echo site_url('Surat_eksternal/export/'.$key->id_daftar_surat); ?>" class = "btn btn-primary btn-sm" title = "Unduh"><li class="fa fa-download"></li></a>
+                        <a href="<?php echo site_url('Surat_eksternal/print_surat/'.$key->id_daftar_surat); ?>" class = "btn btn-primary btn-sm" title = "Unduh"><li class="fa fa-download"></li></a>
                         <?php if($key->status_surat == 1){ ?>
                           <a href="<?php echo site_url('Surat_eksternal/ubah/'.$key->id_daftar_surat); ?>" class = "btn btn-warning btn-sm" title = "Ubah"><li class="fa fa-pen"></li></a>
                           <a href="#" data-id = "<?= $key->id_daftar_surat; ?>" class = "hapus btn btn-danger btn-sm" title = "Hapus"><li class="fa fa-trash"></li></a>

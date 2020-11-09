@@ -276,10 +276,9 @@
       public function si_print($id_daftar_surat){
         $this->db->select('*');
         $this->db->from('daftar_surat');
-        $this->db->join('data_pegawai','data_pegawai.id_data_pegawai=daftar_surat.penandatangan','inner');
+        $this->db->join('data_pegawai','data_pegawai.id_data_pegawai = daftar_surat.penandatangan', 'inner');
         $this->db->join('master_sifat_surat','master_sifat_surat.id_sifat_surat = daftar_surat.sifat_surat','inner');
         $this->db->join('master_jabatan','master_jabatan.id_jabatan = daftar_surat.penandatangan','inner');
-        
         $this->db->where('daftar_surat.id_daftar_surat', $id_daftar_surat);
         return $this->db->get();
       }

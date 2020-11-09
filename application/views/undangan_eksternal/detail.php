@@ -46,7 +46,7 @@
                 <div class="row">
                   <div class="col-sm-6"><h3 class="card-title">Detail Surat Eksternal - Surat</h3></div>
                   <div class="col-sm-6" style="text-align: right;">
-                    <a href="<?= site_url('Undangan_eksternal/export/'.$ue->id_daftar_surat); ?>" class="btn btn-primary"><i class = "fa fa-print"></i> Print</a>
+                    <a href="<?= site_url('Undangan_eksternal/print_undangan/'.$ue->id_daftar_surat); ?>" class="btn btn-primary"><i class = "fa fa-print"></i> Print</a>
                     <?php if($ue->status_surat == 1){ ?>
                       <div class="btn btn-warning"><i class = "fa fa-archive"></i> Draft</div>
                     <?php } ?>

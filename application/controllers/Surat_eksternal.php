@@ -231,4 +231,51 @@ class Surat_eksternal extends CI_Controller {
 		redirect('Surat_eksternal');
 	}
 
+	public function print_surat($id_daftar_surat)
+  	{
+	   	$query = $this->M_surat->si_print($id_daftar_surat)->row();
+	   	// print_r($query); die();
+
+	    $isi = strip_tags($query->isi_surat);
+	    header ("Content-type: text/html; charset=utf-8");
+	    $this->load->library('word');
+	    
+	    $PHPWord = new PHPWord();
+	    $document = $PHPWord->loadTemplate('assets/template/surat_external.docx');
+
+	    $document->setValue('{no_surat}', $query->no_surat);
+	    $document->setValue('{sifat_surat}', $query->nama_sifat_surat);
+	    $document->setValue('{lampiran}', $query->lampiran_surat);
+	    $document->setValue('{perihal}', $query->perihal_surat);
+	    $document->setValue('{jabatan_ttd}', $query->nama_jabatan);
+	    $document->setValue('{nama_ttd}', $query->nama_pegawai);
+	    $document->setValue('{tujuan}', $query->tujuan_surat_ke);
+	    $document->setValue('{tempat}', $query->alamat_tujuan_surat);
+	    $document->setValue('{isi_surat}', html_special($isi));
+
+
+	    $nomor_surat = $query->no_surat;
+	    $no_surat = str_replace('/', '-', $nomor_surat );
+	    $nama_file = 'Surat_Eksternal-'.$no_surat.'.docx';
+	    
+	    $tmp_file = $nama_file;
+	    $document->save('./file_export/'.$tmp_file);
+
+	    // $filePath = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? $file_docx : $file_pdf ;
+
+	    set_time_limit(0);
+	    header('Connection: Keep-Alive');
+	    header('Content-Description: File Transfer');
+	    header('Content-Type: application/octet-stream');
+	    header('Content-Disposition: attachment; filename="'.basename($tmp_file).'"');
+	    header('Content-Transfer-Encoding: binary');
+	    header('Expires: 0');
+	    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	    header('Pragma: public');
+	    header('Content-Length: ' . filesize('./file_export/'.$tmp_file));
+	    ob_clean();
+	    flush();
+	    readfile('./file_export/'.$tmp_file);
+  	}
+
 }
